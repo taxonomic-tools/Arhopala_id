@@ -110,7 +110,7 @@ function ksInitData(keyData, speciesData, treeData) {
     const sp = sp2Map.get(sp2);
     ks.speciesInfo.set(name, {
       common_name: sp ? (sp.common_name || '') : '',
-      inat_url: sp ? sp.inat_url : `https://www.inaturalist.org/search?q=${encodeURIComponent(sp2)}`,
+      inat_url: sp ? sp.inat_url : `https://www.inaturalist.org/observations?verifiable=true&taxon_name=${encodeURIComponent(sp2)}&preferred_place_id=6734`,
     });
   }
 
