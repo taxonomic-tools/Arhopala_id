@@ -439,12 +439,13 @@ function ksRenderHistory() {
     const cpPlus = typeof window !== 'undefined' && window.cpPlusMode;
     const dispNum = cp.num_a;
     const dispTag = `Key ${dispNum}`;
+    let isSkip = false;
     if (a.choice === 'skip') {
-      label = `${dispTag}: Skip`;
+      label = `${dispTag}: Skip`; isSkip = true;
     } else if (a.choice === 'skip-a') {
-      label = `${dispTag}: Skip → A`;
+      label = `${dispTag}: Skip → A`; isSkip = true;
     } else if (a.choice === 'skip-b') {
-      label = `${dispTag}: Skip → B`;
+      label = `${dispTag}: Skip → B`; isSkip = true;
     } else if (a.auto && ksGateRedundantIds && ksGateRedundantIds.has(cp.id)) {
       const displayYes = cp.invert === true ? a.choice === 'B' : a.choice === 'A';
       label = `${dispTag}: ${displayYes ? 'Yes' : 'No'} (auto)`;
@@ -453,7 +454,8 @@ function ksRenderHistory() {
       const displayYes = cp.invert === true ? a.choice === 'B' : a.choice === 'A';
       label = `${dispTag}: ${displayYes ? 'Yes' : 'No'}`;
     }
-    return `<span class="ks-hist-item" data-step="${i}" role="button" tabindex="0" title="Back to Key ${ksEscAttr(String(dispNum))}">${ksEsc(label)}</span>`;
+    const cls = isSkip ? 'ks-hist-item ks-hist-item--skip' : 'ks-hist-item';
+    return `<span class="${cls}" data-step="${i}" role="button" tabindex="0" title="Back to Key ${ksEscAttr(String(dispNum))}">${ksEsc(label)}</span>`;
   }).filter(Boolean).join('<span class="ks-hist-sep">&#8250;</span>');
 
   el.innerHTML = `<div class="ks-hist">${items}</div>`;
